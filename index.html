@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hasnain Auto — Video Banners Demo (AuxLEDs style)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0c0f17; color: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+  a { text-decoration: none; }
+
+  /* ---- mini header ---- */
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; background: #111827; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .wordmark { font-weight: 900; font-size: 20px; letter-spacing: .04em; text-transform: uppercase; }
+  .wordmark span { color: #dc2626; }
+  .wordmark small { display: block; font-size: 9px; letter-spacing: .28em; color: #f59e0b; font-weight: 700; }
+  .demo-badge { font-size: 11px; font-weight: 800; letter-spacing: .12em; color: #111827; background: #f59e0b; padding: 6px 12px; border-radius: 999px; text-transform: uppercase; }
+
+  /* ---- hero showreel ---- */
+  .hero { position: relative; height: min(88vh, 640px); min-height: 420px; overflow: hidden; background: #000; }
+  .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease; pointer-events: none; }
+  .slide.active { opacity: 1; pointer-events: auto; }
+  .slide .poster, .slide video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .slide video { background: #000; }
+  .slide.active .poster { animation: kb 7s ease-out forwards; }
+  @keyframes kb { from { transform: scale(1); } to { transform: scale(1.08); } }
+  .hero-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,.35) 45%, rgba(0,0,0,.05) 75%); pointer-events: none; }
+  .hero-content { position: absolute; left: 6%; bottom: 18%; max-width: 640px; z-index: 3; }
+  .eyebrow { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: .18em; color: #fff; background: #dc2626; padding: 6px 12px; border-radius: 4px; text-transform: uppercase; margin-bottom: 14px; }
+  .hero-content h1 { font-size: clamp(38px, 6vw, 72px); line-height: .95; font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em; }
+  .hero-content h1 span { color: #dc2626; }
+  .hero-content p { margin: 14px 0 22px; font-size: clamp(14px, 1.6vw, 18px); color: #d1d5db; max-width: 480px; line-height: 1.5; }
+  .btn-shop { display: inline-block; background: #dc2626; color: #fff; font-weight: 800; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; padding: 14px 28px; border-radius: 8px; }
+  .btn-shop:hover { background: #b91c1c; }
+  .hero-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 4; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.35); background: rgba(0,0,0,.35); color: #fff; font-size: 20px; cursor: pointer; }
+  .hero-arrow.left { left: 16px; } .hero-arrow.right { right: 16px; }
+  .hero-dots { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 4; }
+  .hero-dots button { width: 10px; height: 10px; border-radius: 50%; border: none; background: rgba(255,255,255,.4); cursor: pointer; padding: 0; }
+  .hero-dots button.on { background: #dc2626; width: 28px; border-radius: 999px; }
+  .clip-status { position: absolute; right: 16px; bottom: 16px; z-index: 4; font-size: 11px; font-weight: 700; letter-spacing: .08em; background: rgba(0,0,0,.6); border: 1px solid rgba(255,255,255,.2); color: #e5e7eb; padding: 6px 10px; border-radius: 999px; }
+
+  /* ---- section labels ---- */
+  .section { padding: 56px 6% 8px; }
+  .section h2 { font-size: clamp(22px, 3vw, 32px); font-weight: 900; text-transform: uppercase; }
+  .section h2 span { color: #dc2626; }
+  .section p.sub { color: #9ca3af; margin-top: 6px; font-size: 14px; }
+
+  /* ---- category banner ---- */
+  .cat-banner { position: relative; margin: 24px 6% 0; border-radius: 16px; overflow: hidden; min-height: 320px; }
+  .cat-banner img { display: block; width: 100%; height: 100%; min-height: 320px; max-height: 460px; object-fit: cover; object-position: center 30%; }
+  .cat-banner .shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.75) 0%, rgba(0,0,0,.25) 55%, rgba(0,0,0,0) 100%); }
+  .cat-banner .copy { position: absolute; left: 5%; bottom: 14%; max-width: 620px; }
+  .cat-banner .copy h3 { font-size: clamp(34px, 5vw, 60px); font-weight: 900; text-transform: uppercase; line-height: 1; }
+  .cat-banner .copy .tag { margin-top: 8px; font-size: clamp(13px, 1.6vw, 18px); font-weight: 700; letter-spacing: .14em; color: #fca5a5; text-transform: uppercase; }
+  .cat-banner .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .cat-banner .chips span { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.55); border: 1px solid rgba(255,255,255,.25); padding: 7px 12px; border-radius: 999px; }
+
+  /* ---- coming categories ---- */
+  .cat-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 6% 0; }
+  .cat-row span { font-size: 13px; font-weight: 700; background: #1f2937; border: 1px solid rgba(255,255,255,.1); padding: 10px 16px; border-radius: 999px; }
+  .cat-row span b { color: #dc2626; }
+
+  /* ---- demo note ---- */
+  .note { margin: 48px 6% 64px; background: #111827; border: 1px solid rgba(255,255,255,.1); border-left: 4px solid #dc2626; border-radius: 12px; padding: 24px 28px; }
+  .note h3 { font-size: 16px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; }
+  .note p, .note li { font-size: 14px; line-height: 1.65; color: #d1d5db; }
+  .note ul { margin: 8px 0 0 18px; }
+  .note code { background: #0c0f17; border: 1px solid rgba(255,255,255,.12); padding: 1px 6px; border-radius: 4px; font-size: 13px; color: #fca5a5; }
+
+  .foot { text-align: center; color: #6b7280; font-size: 12px; padding: 0 24px 32px; }
+
+  @media (max-width: 640px) {
+    .hero { height: 78vh; min-height: 480px; }
+    .hero-content { left: 5%; right: 5%; bottom: 15%; }
+    .hero-arrow { display: none; }
+    .clip-status { bottom: 54px; right: 12px; }
+    .cat-banner { min-height: 260px; }
+    .cat-banner img { min-height: 260px; }
+    .section, .cat-row { padding-left: 5%; padding-right: 5%; }
+    .cat-banner { margin-left: 5%; margin-right: 5%; }
+    .note { margin-left: 5%; margin-right: 5%; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wordmark">Hasnain <span>Auto</span><small>Decoration Accessories</small></div>
+  <div class="demo-badge">Demo Preview</div>
+</header>
+
+<!-- ============ (a) HOMEPAGE HERO — VIDEO SHOWREEL ============ -->
+<section class="hero" id="hero" aria-label="Homepage hero showreel">
+  <div class="slide active" data-clip="1">
+    <img class="poster" src="media/hero-1.webp" alt="Car driving toward camera on a night highway, headlights on, wet road">
+    <video muted loop playsinline preload="metadata" poster="media/hero-1.webp"><source src="media/hero-clip-1.mp4" type="video/mp4"></video>
+  </div>
+  <div class="slide" data-clip="2">
+    <img class="poster" src="media/hero-2.webp" alt="Car front view at night, headlights blazing">
+    <video muted loop playsinline preload="metadata" poster="media/hero-2.webp"><source src="media/hero-clip-2.mp4" type="video/mp4"></video>
+  </div>
+  <div class="slide" data-clip="3">
+    <img class="poster" src="media/hero-3.webp" alt="Low-beam pattern lighting an empty night road">
+    <video muted loop playsinline preload="metadata" poster="media/hero-3.webp"><source src="media/hero-clip-3.mp4" type="video/mp4"></video>
+  </div>
+
+  <div class="hero-shade"></div>
+
+  <div class="hero-content">
+    <span class="eyebrow">LED Headlights &bull; Brighter Nights</span>
+    <h1>See Farther<br><span>Drive Safer</span></h1>
+    <p>Powerful LED headlights &mdash; brighter road, sharper cutoff, zero glare. Fitted free at our Saddar Rawalpindi workshop.</p>
+    <a class="btn-shop" href="https://hasnainauto.vercel.app/shop" target="_blank" rel="noopener">Shop Now &rsaquo;</a>
+  </div>
+
+  <button class="hero-arrow left" id="prevBtn" aria-label="Previous slide">&#8249;</button>
+  <button class="hero-arrow right" id="nextBtn" aria-label="Next slide">&#8250;</button>
+  <div class="hero-dots" id="dots"></div>
+  <div class="clip-status" id="clipStatus">Clip 1 / 3 &middot; Still preview</div>
+</section>
+
+<!-- ============ (b) LOW BEAM CATEGORY BANNER ============ -->
+<div class="section">
+  <h2>Low Beam <span>&mdash; Category Banner</span></h2>
+  <p class="sub">Same pattern as AuxLEDs: one wide cinematic photo per category, name and tagline as HTML overlay (never baked into the image).</p>
+</div>
+
+<section class="cat-banner" aria-label="Low Beam category banner">
+  <img src="media/low-beam-banner.webp" alt="Night road from the driver's side, car front corner at right with low beam lighting the road ahead">
+  <div class="shade"></div>
+  <div class="copy">
+    <h3>Low Beam</h3>
+    <div class="tag">Clear Vision. Safer Drives.</div>
+    <div class="chips"><span>Wide Visibility</span><span>Bright &amp; Focused</span><span>Safety You Can Trust</span></div>
+  </div>
+</section>
+
+<div class="section">
+  <h2>Coming next <span>&mdash; one banner each</span></h2>
+  <p class="sub">Every shop category gets its own banner in the same style when this goes live.</p>
+</div>
+<div class="cat-row">
+  <span><b>&#9679;</b> Low Beam</span>
+  <span><b>&#9679;</b> High Beam</span>
+  <span><b>&#9679;</b> Parking Lights</span>
+  <span><b>&#9679;</b> Fog Lights</span>
+  <span><b>&#9679;</b> Cabin Lights</span>
+  <span><b>&#9679;</b> Ambient Lights</span>
+  <span><b>&#9679;</b> Auxpods</span>
+  <span><b>&#9679;</b> Car Perfumes</span>
+</div>
+
+<!-- ============ (c) DEMO NOTE ============ -->
+<div class="note">
+  <h3>Demo note &mdash; please read before approving</h3>
+  <p>This page is a <b>demo only</b>. Nothing here is on the live site, and nothing has been pushed anywhere. The final version will use the same media inside the real Hasnain Auto site.</p>
+  <ul>
+    <li><b>Video clips are missing right now:</b> the 3 AI video clips could not be generated on 24 Nov 2026 &mdash; the video service was overloaded (HTTP 502/503). The hero therefore shows the cinematic stills with a slow zoom as a stand-in, and the status badge says &ldquo;Still preview&rdquo;.</li>
+    <li><b>The video player code is already in place:</b> drop <code>hero-clip-1.mp4</code>, <code>hero-clip-2.mp4</code> and <code>hero-clip-3.mp4</code> into the <code>media/</code> folder and the showreel plays automatically &mdash; muted, autoplay, looping, switching clip on end. No code change needed.</li>
+    <li><b>All media is fresh:</b> every image here was AI-generated for this demo. No AuxLEDs footage or photos were copied or reused.</li>
+    <li><b>Colours:</b> Hasnain red (<code>#dc2626</code>), not AuxLEDs lime.</li>
+  </ul>
+</div>
+
+<p class="foot">Hasnain Auto Decoration &amp; Accessories &mdash; Azhar Shaheed Auto Market, Kashmir Road, Saddar, Rawalpindi</p>
+
+<script>
+(function () {
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var dotsBox = document.getElementById('dots');
+  var statusEl = document.getElementById('clipStatus');
+  var current = 0, timer = null;
+
+  slides.forEach(function (_, i) {
+    var b = document.createElement('button');
+    b.setAttribute('aria-label', 'Go to clip ' + (i + 1));
+    if (i === 0) b.className = 'on';
+    b.addEventListener('click', function () { show(i); restart(); });
+    dotsBox.appendChild(b);
+  });
+  var dots = Array.prototype.slice.call(dotsBox.children);
+
+  function setStatus(mode) {
+    statusEl.textContent = 'Clip ' + (current + 1) + ' / ' + slides.length + ' \u00b7 ' + mode;
+  }
+
+  function tryPlay(slide) {
+    var v = slide.querySelector('video');
+    if (!v) { setStatus('Still preview'); return; }
+    var p = v.play();
+    if (p && p.catch) p.catch(function () { setStatus('Still preview'); });
+    v.addEventListener('playing', function onPlay() {
+      setStatus('Video playing \u2022 muted \u2022 loop');
+      v.removeEventListener('playing', onPlay);
+    });
+    v.addEventListener('error', function () { v.style.display = 'none'; setStatus('Still preview'); }, true);
+  }
+
+  function show(i) {
+    slides[current].classList.remove('active');
+    var vOld = slides[current].querySelector('video');
+    if (vOld) { vOld.pause(); }
+    dots[current].classList.remove('on');
+    current = (i + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('on');
+    setStatus('Still preview');
+    tryPlay(slides[current]);
+  }
+
+  function restart() {
+    if (timer) clearInterval(timer);
+    timer = setInterval(function () { show(current + 1); }, 6000);
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', function () { show(current - 1); restart(); });
+  document.getElementById('nextBtn').addEventListener('click', function () { show(current + 1); restart(); });
+
+  // If a clip ends, move to the next one (the showreel behaviour).
+  slides.forEach(function (slide, i) {
+    var v = slide.querySelector('video');
+    if (v) v.addEventListener('ended', function () { if (i === current) { show(current + 1); restart(); } });
+  });
+
+  tryPlay(slides[0]);
+  restart();
+})();
+</script>
+</body>
+</html>
