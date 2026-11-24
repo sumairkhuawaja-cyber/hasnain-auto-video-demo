@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hasnain Auto — Video Banners Demo (AuxLEDs style)</title>
+<title>Hasnain Auto — Video Banners Demo (AuxLEDs style) — Round 2</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: #0c0f17; color: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
@@ -47,18 +47,16 @@
 
   /* ---- category banner ---- */
   .cat-banner { position: relative; margin: 24px 6% 0; border-radius: 16px; overflow: hidden; min-height: 320px; }
-  .cat-banner img { display: block; width: 100%; height: 100%; min-height: 320px; max-height: 460px; object-fit: cover; object-position: center 30%; }
+  .cat-banner img, .cat-banner video.cat-video { display: block; width: 100%; height: 100%; min-height: 320px; max-height: 460px; object-fit: cover; object-position: center 30%; }
+  .cat-banner video.cat-video { position: absolute; inset: 0; background: #000; }
   .cat-banner .shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.75) 0%, rgba(0,0,0,.25) 55%, rgba(0,0,0,0) 100%); }
   .cat-banner .copy { position: absolute; left: 5%; bottom: 14%; max-width: 620px; }
   .cat-banner .copy h3 { font-size: clamp(34px, 5vw, 60px); font-weight: 900; text-transform: uppercase; line-height: 1; }
   .cat-banner .copy .tag { margin-top: 8px; font-size: clamp(13px, 1.6vw, 18px); font-weight: 700; letter-spacing: .14em; color: #fca5a5; text-transform: uppercase; }
   .cat-banner .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
   .cat-banner .chips span { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: rgba(0,0,0,.55); border: 1px solid rgba(255,255,255,.25); padding: 7px 12px; border-radius: 999px; }
-
-  /* ---- coming categories ---- */
-  .cat-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 6% 0; }
-  .cat-row span { font-size: 13px; font-weight: 700; background: #1f2937; border: 1px solid rgba(255,255,255,.1); padding: 10px 16px; border-radius: 999px; }
-  .cat-row span b { color: #dc2626; }
+  .cat-banner .chips span.count { background: #dc2626; border-color: #dc2626; color: #fff; }
+  .cat-banner .chips span.soon { background: #f59e0b; border-color: #f59e0b; color: #111827; }
 
   /* ---- demo note ---- */
   .note { margin: 48px 6% 64px; background: #111827; border: 1px solid rgba(255,255,255,.1); border-left: 4px solid #dc2626; border-radius: 12px; padding: 24px 28px; }
@@ -75,8 +73,8 @@
     .hero-arrow { display: none; }
     .clip-status { bottom: 54px; right: 12px; }
     .cat-banner { min-height: 260px; }
-    .cat-banner img { min-height: 260px; }
-    .section, .cat-row { padding-left: 5%; padding-right: 5%; }
+    .cat-banner img, .cat-banner video.cat-video { min-height: 260px; }
+    .section { padding-left: 5%; padding-right: 5%; }
     .cat-banner { margin-left: 5%; margin-right: 5%; }
     .note { margin-left: 5%; margin-right: 5%; }
   }
@@ -86,10 +84,10 @@
 
 <header class="topbar">
   <div class="wordmark">Hasnain <span>Auto</span><small>Decoration Accessories</small></div>
-  <div class="demo-badge">Demo Preview</div>
+  <div class="demo-badge">Demo Preview &middot; Round 2</div>
 </header>
 
-<!-- ============ (a) HOMEPAGE HERO — VIDEO SHOWREEL ============ -->
+<!-- ============ HOMEPAGE HERO — VIDEO SHOWREEL ============ -->
 <section class="hero" id="hero" aria-label="Homepage hero showreel">
   <div class="slide active" data-clip="1">
     <img class="poster" src="media/hero-1.webp" alt="Car driving toward camera on a night highway, headlights on, wet road">
@@ -119,46 +117,189 @@
   <div class="clip-status" id="clipStatus">Clip 1 / 3 &middot; Still preview</div>
 </section>
 
-<!-- ============ (b) LOW BEAM CATEGORY BANNER ============ -->
+<!-- ============ ALL 15 CATEGORY BANNERS ============ -->
 <div class="section">
-  <h2>Low Beam <span>&mdash; Category Banner</span></h2>
-  <p class="sub">Same pattern as AuxLEDs: one wide cinematic photo per category, name and tagline as HTML overlay (never baked into the image).</p>
+  <h2>All 15 Categories <span>&mdash; One Banner Each</span></h2>
+  <p class="sub">Same pattern as AuxLEDs: one wide cinematic photo per category, name and tagline as HTML overlay (never baked into the image). Counts are the real live counts; the 7 &ldquo;Coming soon&rdquo; categories have no products yet.</p>
 </div>
 
+<!-- 1. Car Perfumes -->
+<section class="cat-banner" aria-label="Car Perfumes category banner">
+  <img src="media/banner-car-perfumes.webp" alt="Volcano lava car aroma diffuser misting on a car dashboard at night">
+  <video class="cat-video" muted loop playsinline preload="metadata" poster="media/banner-car-perfumes.webp"><source src="media/cat-car-perfumes.mp4" type="video/mp4"></video>
+  <div class="shade"></div>
+  <div class="copy">
+    <h3>Car Perfumes</h3>
+    <div class="tag">Fresh Air, Every Drive.</div>
+    <div class="chips"><span class="count">1 product</span><span>Volcano Lava Diffuser</span></div>
+  </div>
+</section>
+
+<!-- 2. Ambient Lights -->
+<section class="cat-banner" aria-label="Ambient Lights category banner">
+  <img src="media/banner-ambient-lights.webp" alt="Car interior at night lit by colourful LED ambient light strips">
+  <div class="shade"></div>
+  <div class="copy">
+    <h3>Ambient Lights</h3>
+    <div class="tag">Light Up The Night Inside.</div>
+    <div class="chips"><span class="count">2 products</span><span>Premium Interior Light Kit</span></div>
+  </div>
+</section>
+
+<!-- 3. Pods - Auxiliary Lighting -->
+<section class="cat-banner" aria-label="Pods Auxiliary Lighting category banner">
+  <img src="media/banner-auxpods.webp" alt="Round auxiliary LED pods on a 4x4 off-road vehicle at night, amber glow">
+  <div class="shade"></div>
+  <div class="copy">
+    <h3>Pods &middot; Auxiliary Lighting</h3>
+    <div class="tag">Off-Road Lighting, Built Tough.</div>
+    <div class="chips"><span class="count">2 products</span><span>4x4 LED Off-Road Light Bar</span></div>
+  </div>
+</section>
+
+<!-- 4. Low Beam -->
 <section class="cat-banner" aria-label="Low Beam category banner">
   <img src="media/low-beam-banner.webp" alt="Night road from the driver's side, car front corner at right with low beam lighting the road ahead">
+  <video class="cat-video" muted loop playsinline preload="metadata" poster="media/low-beam-banner.webp"><source src="media/cat-low-beam.mp4" type="video/mp4"></video>
   <div class="shade"></div>
   <div class="copy">
     <h3>Low Beam</h3>
     <div class="tag">Clear Vision. Safer Drives.</div>
-    <div class="chips"><span>Wide Visibility</span><span>Bright &amp; Focused</span><span>Safety You Can Trust</span></div>
+    <div class="chips"><span class="count">13 products</span><span>Y6 H4 Mini Projector</span></div>
   </div>
 </section>
 
-<div class="section">
-  <h2>Coming next <span>&mdash; one banner each</span></h2>
-  <p class="sub">Every shop category gets its own banner in the same style when this goes live.</p>
-</div>
-<div class="cat-row">
-  <span><b>&#9679;</b> Low Beam</span>
-  <span><b>&#9679;</b> High Beam</span>
-  <span><b>&#9679;</b> Parking Lights</span>
-  <span><b>&#9679;</b> Fog Lights</span>
-  <span><b>&#9679;</b> Cabin Lights</span>
-  <span><b>&#9679;</b> Ambient Lights</span>
-  <span><b>&#9679;</b> Auxpods</span>
-  <span><b>&#9679;</b> Car Perfumes</span>
-</div>
+<!-- 5. High Beam -->
+<section class="cat-banner" aria-label="High Beam category banner">
+  <img src="media/banner-high-beam.webp" alt="Driver's point of view on a dark highway, high beams cutting far down the empty road">
+  <video class="cat-video" muted loop playsinline preload="metadata" poster="media/banner-high-beam.webp"><source src="media/cat-high-beam.mp4" type="video/mp4"></video>
+  <div class="shade"></div>
+  <div class="copy">
+    <h3>High Beam</h3>
+    <div class="tag">See Farther. Drive Safer.</div>
+    <div class="chips"><span class="count">12 products</span><span>REGO Racing H4</span></div>
+  </div>
+</section>
 
-<!-- ============ (c) DEMO NOTE ============ -->
+<!-- 6. Fog Lights -->
+<section class="cat-banner" aria-label="Fog Lights category banner">
+  <img src="media/banner-fog-lights.webp" alt="Car at dusk on a wet road, warm yellow fog lights glowing low and wide">
+  <div class="shade"></div>
+  <div class="copy">
+    <h3>Fog Lights</h3>
+    <div class="tag">Cut Through Fog &amp; Rain.</div>
+    <div class="chips"><span class="count">2 products</span><span>5-Lens Off-Road Light Bar</span></div>
+  </div>
+</section>
+
+<!-- 7. Parking Lights -->
+<section class="cat-banner" aria-label="Parking Lights category banner">
+  <img src="media/banner-parking-lights.webp" alt="Car front end at night with bright white parking lights glowing">
+  <div class="shade"></div>
+  <div class="copy">
+    <h3>Parking Lights</h3>
+    <div class="tag">Small Lights, Big Presence.</div>
+    <div class="chips"><span class="count">6 products</span><span>Premium T10 Ultra-Bright</span></div>
+  </div>
+</section>
+
+<!-- 8. Cabin Lights -->
+<section class="cat-banner" aria-label="Cabin Lights category banner">
+  <img src="media/banner-cabin-lights.webp" alt="Car dome light glowing warmly inside a dark cabin at night">
+  <div class="shade"></div>
+  <div class="copy">
+    <h3>Cabin Lights</h3>
+    <div class="tag">Bright Cabin, Clear View.</div>
+    <div class="chips"><span class="count">4 products</span><span>Super-Bright LED Dome Lights</span></div>
+  </div>
+</section>
+
+<!-- 9. Turn Signal -->
+<section class="cat-banner" aria-label="Turn Signal category banner">
+  <img src="media/banner-turn-signal.webp" alt="Car headlight close-up at night with amber turn-signal indicator lit">
+  <div class="shade"></div>
+  <div class="copy">
+    <h3>Turn Signal</h3>
+    <div class="tag">Signal Bright, Turn Safe.</div>
+    <div class="chips"><span class="soon">Coming soon</span><span>Amber Indicator LEDs</span></div>
+  </div>
+</section>
+
+<!-- 10. Dynamic Side Mirrors -->
+<section class="cat-banner" aria-label="Dynamic Side Mirrors category banner">
+  <img src="media/banner-dynamic-side-mirrors.webp" alt="Car side mirror at night with slim amber LED strip glowing along the mirror edge">
+  <div class="shade"></div>
+  <div class="copy">
+    <h3>Dynamic Side Mirrors</h3>
+    <div class="tag">Style That Moves With You.</div>
+    <div class="chips"><span class="soon">Coming soon</span><span>SH Pro Style Mirrors</span></div>
+  </div>
+</section>
+
+<!-- 11. License Plate -->
+<section class="cat-banner" aria-label="License Plate category banner">
+  <img src="media/banner-license-plate.webp" alt="Car rear license plate area at night lit by bright white LED plate lights">
+  <div class="shade"></div>
+  <div class="copy">
+    <h3>License Plate</h3>
+    <div class="tag">Light Up Your Plate.</div>
+    <div class="chips"><span class="soon">Coming soon</span><span>Premium T10 Canbus</span></div>
+  </div>
+</section>
+
+<!-- 12. Brake Lights -->
+<section class="cat-banner" aria-label="Brake Lights category banner">
+  <img src="media/banner-brake-lights.webp" alt="Car tail light at night glowing bright red">
+  <div class="shade"></div>
+  <div class="copy">
+    <h3>Brake Lights</h3>
+    <div class="tag">Stop Bright. Stay Safe.</div>
+    <div class="chips"><span class="soon">Coming soon</span><span>Red Tail Glow LEDs</span></div>
+  </div>
+</section>
+
+<!-- 13. Fender Lights -->
+<section class="cat-banner" aria-label="Fender Lights category banner">
+  <img src="media/banner-fender-lights.webp" alt="Car fender at night with slim white LED strip glowing along the edge">
+  <div class="shade"></div>
+  <div class="copy">
+    <h3>Fender Lights</h3>
+    <div class="tag">Slim Lines, Sharp Looks.</div>
+    <div class="chips"><span class="soon">Coming soon</span><span>Slim Fender Strips</span></div>
+  </div>
+</section>
+
+<!-- 14. Reverse Lights -->
+<section class="cat-banner" aria-label="Reverse Lights category banner">
+  <img src="media/banner-reverse-lights.webp" alt="Rear view of a car at night with bright white reverse lights glowing">
+  <div class="shade"></div>
+  <div class="copy">
+    <h3>Reverse Lights</h3>
+    <div class="tag">See Behind, Reverse With Confidence.</div>
+    <div class="chips"><span class="soon">Coming soon</span><span>White Reverse Glow</span></div>
+  </div>
+</section>
+
+<!-- 15. Motorcycle Leds -->
+<section class="cat-banner" aria-label="Motorcycle Leds category banner">
+  <img src="media/banner-motorcycle-leds.webp" alt="Motorcycle at night with bright white LED headlight blazing">
+  <div class="shade"></div>
+  <div class="copy">
+    <h3>Motorcycle Leds</h3>
+    <div class="tag">Ride Bright At Night.</div>
+    <div class="chips"><span class="soon">Coming soon</span><span>REGO Motorcycle LED</span></div>
+  </div>
+</section>
+
+<!-- ============ DEMO NOTE ============ -->
 <div class="note">
-  <h3>Demo note &mdash; please read before approving</h3>
-  <p>This page is a <b>demo only</b>. Nothing here is on the live site, and nothing has been pushed anywhere. The final version will use the same media inside the real Hasnain Auto site.</p>
+  <h3>Demo note &mdash; round 2, please read before approving</h3>
+  <p>This page is a <b>demo only</b>. Nothing here is on the live site, and nothing has been pushed to the live project. The final version will use the same media inside the real Hasnain Auto site.</p>
   <ul>
-    <li><b>Video clips are missing right now:</b> the 3 AI video clips could not be generated on 24 Nov 2026 &mdash; the video service was overloaded (HTTP 502/503). The hero therefore shows the cinematic stills with a slow zoom as a stand-in, and the status badge says &ldquo;Still preview&rdquo;.</li>
-    <li><b>The video player code is already in place:</b> drop <code>hero-clip-1.mp4</code>, <code>hero-clip-2.mp4</code> and <code>hero-clip-3.mp4</code> into the <code>media/</code> folder and the showreel plays automatically &mdash; muted, autoplay, looping, switching clip on end. No code change needed.</li>
-    <li><b>All media is fresh:</b> every image here was AI-generated for this demo. No AuxLEDs footage or photos were copied or reused.</li>
-    <li><b>Colours:</b> Hasnain red (<code>#dc2626</code>), not AuxLEDs lime.</li>
+    <li><b>All 15 category banners are done:</b> every banner photo on this page was freshly AI-generated for this demo, matched to the category&rsquo;s real product (e.g. High Beam = REGO Racing H4, Low Beam = Y6 H4 Mini Projector, Car Perfumes = Volcano Lava diffuser). No AuxLEDs photos were copied. Counts are the real live counts; the 7 &ldquo;Coming soon&rdquo; categories have no products yet.</li>
+    <li><b>Videos are still missing:</b> all 6 video attempts (3 hero clips + 3 category clips for Low Beam, High Beam, Car Perfumes) failed on 24 Nov 2026 &mdash; the video service was overloaded (HTTP 502/503) in both round 1 and round 2. The hero therefore still shows the cinematic stills with a slow zoom, and the status badge says &ldquo;Still preview&rdquo;.</li>
+    <li><b>The video player code is already in place:</b> drop <code>hero-clip-1.mp4</code>, <code>hero-clip-2.mp4</code>, <code>hero-clip-3.mp4</code> (hero) and <code>cat-low-beam.mp4</code>, <code>cat-high-beam.mp4</code>, <code>cat-car-perfumes.mp4</code> (categories) into the <code>media/</code> folder and they play automatically &mdash; muted, autoplay, looping. No code change needed. The clips can be retried when the video service recovers, made by Antigravity, or replaced with real filmed footage.</li>
+    <li><b>Colours:</b> Hasnain red (<code>#dc2626</code>), not AuxLEDs lime. Category names, taglines and counts are HTML overlay, never baked into the images.</li>
   </ul>
 </div>
 
@@ -220,6 +361,13 @@
   slides.forEach(function (slide, i) {
     var v = slide.querySelector('video');
     if (v) v.addEventListener('ended', function () { if (i === current) { show(current + 1); restart(); } });
+  });
+
+  // Category banner videos: play if the clip file exists, hide silently if not.
+  Array.prototype.forEach.call(document.querySelectorAll('video.cat-video'), function (v) {
+    var p = v.play();
+    if (p && p.catch) p.catch(function () { v.style.display = 'none'; });
+    v.addEventListener('error', function () { v.style.display = 'none'; }, true);
   });
 
   tryPlay(slides[0]);
